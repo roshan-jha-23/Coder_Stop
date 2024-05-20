@@ -23,7 +23,7 @@ function Navbar({ classname }: { classname?: string }) {
           <div className="flex flex-col space-y-4 text-sm">
             <HoveredLink href="/platforms/github"> GitHub</HoveredLink>
             <HoveredLink href="/platforms/leetcode">LeetCode</HoveredLink>
-            <HoveredLink href="#">Codeforces</HoveredLink>
+            <HoveredLink href="/platforms/codeforces">Codeforces</HoveredLink>
           </div>
         </MenuItem>
 

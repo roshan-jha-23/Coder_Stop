@@ -4,7 +4,11 @@
  */
 const nextConfig = {
   images: {
-    domains: ["avatars.githubusercontent.com", "assets.leetcode.com"],
+    domains: [
+      "avatars.githubusercontent.com",
+      "assets.leetcode.com",
+      "userpic.codeforces.org",
+    ],
   },
   async rewrites() {
     return [
