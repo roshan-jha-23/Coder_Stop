@@ -25,7 +25,7 @@ function Navbar({ classname }: { classname?: string }) {
           ></MenuItem>
         </Link>
 
-        <MenuItem setActive={setActive} active={active} item="platform">
+        <MenuItem setActive={setActive} active={active} item="Platform">
           <div className="flex flex-col space-y-4 text-sm">
             <HoveredLink href="/platforms/github"> GitHub</HoveredLink>
             <HoveredLink href="/platforms/leetcode">LeetCode</HoveredLink>
@@ -33,19 +33,14 @@ function Navbar({ classname }: { classname?: string }) {
           </div>
         </MenuItem>
 
-        <MenuItem setActive={setActive} active={active} item="Resources">
-          <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="#"> Blog</HoveredLink>
-            <HoveredLink href="#">Help/Support</HoveredLink>
-          </div>
-        </MenuItem>
+       
 
         <MenuItem setActive={setActive} active={active} item="Community">
           <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="#"> Contact</HoveredLink>
-            <HoveredLink href="#"> Feedback</HoveredLink>
+            <HoveredLink href="/community/contact"> Contact</HoveredLink>
+            <HoveredLink href="/community/feedback"> Feedback</HoveredLink>
             <HoveredLink href="/community/aboutus"> About Us</HoveredLink>
-            <HoveredLink href="#"> Social Links</HoveredLink>
+           
           </div>
         </MenuItem>
 
@@ -60,21 +55,7 @@ function Navbar({ classname }: { classname?: string }) {
             <HoveredLink href="/dashboard"> Profile</HoveredLink>
           </div>
         </MenuItem>
-        <div className="mx-auto">
-          {
-            isLoading && (<div className="animate-spin rounded-full h-7 w-7 border-b-2 border-white/50 mx-auto my-2"></div>)
-          }
-         {
-          user?.picture && (<Image
-          src={user?.picture}
-          alt="profile picture"
-          width={50}
-          height={50}
-          className="rounded-full mx-auto my-2"
-          />)
-
-         }
-        </div>
+       
       </Menu>
     </div>
   );
