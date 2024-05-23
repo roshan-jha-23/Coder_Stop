@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import { HoveredLink, Menu, MenuItem } from "./ui/navbar-menu"; 
 import { cn } from "@/utils/cn";
 import Link from "next/link";
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+
 
 
 function Navbar({ classname }: { classname?: string }) {
-  const{user,isAuthenticated,isLoading}=useKindeBrowserClient();
+  
 
   const [active, setActive] = useState<string | null>(null);
   return (
@@ -35,7 +35,7 @@ function Navbar({ classname }: { classname?: string }) {
           <div className="flex flex-col space-y-4 text-sm">
             <HoveredLink href="/community/contact"> Contact</HoveredLink>
             <HoveredLink href="/community/feedback"> Feedback</HoveredLink>
-            <HoveredLink href="/community/aboutus"> About Us</HoveredLink>
+            <HoveredLink href="/community/aboutus">About Us</HoveredLink>
           </div>
         </MenuItem>
 

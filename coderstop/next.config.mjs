@@ -7,7 +7,9 @@ const nextConfig = {
     domains: [
       "avatars.githubusercontent.com",
       "assets.leetcode.com",
-      "userpic.codeforces.org","media.licdn.com"
+      "userpic.codeforces.org",
+      "media.licdn.com",
+      "images.unsplash.com",
     ],
   },
   async rewrites() {
