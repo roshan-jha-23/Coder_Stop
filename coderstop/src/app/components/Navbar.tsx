@@ -1,12 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import { HoveredLink, Menu, MenuItem } from "./ui/navbar-menu"; // Removed ProductItem as it's not used
+import { HoveredLink, Menu, MenuItem } from "./ui/navbar-menu"; 
 import { cn } from "@/utils/cn";
 import Link from "next/link";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import { usePathname } from "next/navigation";
-import { div } from "three/examples/jsm/nodes/Nodes.js";
-import Image from "next/image";
+
 
 function Navbar({ classname }: { classname?: string }) {
   const{user,isAuthenticated,isLoading}=useKindeBrowserClient();
@@ -33,21 +31,18 @@ function Navbar({ classname }: { classname?: string }) {
           </div>
         </MenuItem>
 
-       
-
         <MenuItem setActive={setActive} active={active} item="Community">
           <div className="flex flex-col space-y-4 text-sm">
             <HoveredLink href="/community/contact"> Contact</HoveredLink>
             <HoveredLink href="/community/feedback"> Feedback</HoveredLink>
             <HoveredLink href="/community/aboutus"> About Us</HoveredLink>
-           
           </div>
         </MenuItem>
 
         <MenuItem setActive={setActive} active={active} item="Account">
           <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="/login-page"> Profile</HoveredLink>
-            <HoveredLink href="#"> Logout</HoveredLink>
+            <HoveredLink href="/account/login"> Sign-in</HoveredLink>
+            <HoveredLink href="/account"> Sign-up</HoveredLink>
           </div>
         </MenuItem>
         <MenuItem setActive={setActive} active={active} item="Dashboard">
@@ -55,7 +50,6 @@ function Navbar({ classname }: { classname?: string }) {
             <HoveredLink href="/dashboard"> Profile</HoveredLink>
           </div>
         </MenuItem>
-       
       </Menu>
     </div>
   );
