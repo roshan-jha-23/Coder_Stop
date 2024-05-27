@@ -3,7 +3,7 @@ import bcryptjs from "bcryptjs";
 import User from "@/models/userModel";
 
 export const sendEmail = async ({ email, emailType, userId }:any) => {
-  console.log("mailer 1")
+ 
   try {
 
     if (
@@ -13,7 +13,7 @@ export const sendEmail = async ({ email, emailType, userId }:any) => {
     ) {
       throw new Error("Missing environment variables");
     }
-    console.log("mailer 2")
+    
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -21,10 +21,10 @@ export const sendEmail = async ({ email, emailType, userId }:any) => {
         pass: process.env.SENDER_MAIL_PASS,
       },
     });
-console.log("mailer 3")
+
     const salt = await bcryptjs.genSalt(10);
     const hashedToken = await bcryptjs.hash(userId.toString(), salt);
-console.log("mailer 4");
+
     let updateUserFields;
     if (emailType === "VERIFY") {
       updateUserFields = {
@@ -39,9 +39,8 @@ console.log("mailer 4");
     } else {
       throw new Error("Invalid email type");
     }
-console.log("mailer 5");
-    await User.findByIdAndUpdate(userId, updateUserFields);
-console.log("mailer 6");
+
+    await User.findByIdAndUpdate(userId, { $set: updateUserFields });
     const mailOptions = {
       from: process.env.SENDER_MAIL,
       to: email,
@@ -69,11 +68,10 @@ console.log("mailer 6");
         </div>
       `,
     };
-console.log("mailer 78");
+
     const mailResponse = await transporter.sendMail(mailOptions);
     return mailResponse;
   } catch (error:any) {
-    console.log("isme to kahi nahi aagye sir??")
     throw new Error(error.message);
   }
 };
