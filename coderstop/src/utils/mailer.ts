@@ -61,6 +61,9 @@ export const sendEmail = async ({ email, emailType, userId }:any) => {
       }?token=${hashedToken}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; border-radius: 4px;">${
         emailType === "VERIFY" ? "Verify Email" : "Reset Password"
       }</a>
+      <p>If This Link does not work copy paste ${process.env.DOMAIN}/${
+        emailType === "VERIFY" ? "verifyemail" : "resetpassword"
+      }?token=${hashedToken}</p>
           <p>This link is valid for 1 hour.</p>
           <p>If you did not request this, please ignore this email.</p>
           <p>Thanks,</p>
