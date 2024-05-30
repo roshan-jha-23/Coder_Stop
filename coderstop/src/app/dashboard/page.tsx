@@ -1,18 +1,12 @@
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
+import React from "react";
+import Dashboard from "./puttingTogether/PutTogether";
 
-import React from 'react'
-import {redirect} from 'next/navigation'
-async function page() {
-    const {isAuthenticated}=getKindeServerSession();
-    const isLoggedIn=await isAuthenticated();
-    if(!isLoggedIn){
-         redirect('/login-page')
-    }
+function App() {
   return (
-    <div>
-      sexy
+    <div className="App">
+      <Dashboard />
     </div>
-  )
+  );
 }
 
-export default page
+export default App;
