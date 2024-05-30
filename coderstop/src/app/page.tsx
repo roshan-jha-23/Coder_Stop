@@ -1,6 +1,5 @@
 import React from "react";
 import HeroSection from "@/app/components/HeroSection";
-import {GoogleGeminiEffectDemo} from "@/app/components/GoogleAi";
 import { AnimatedTooltipPreview } from "./components/OurTeam";
 
 const MainPage = () => {
