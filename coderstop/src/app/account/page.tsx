@@ -41,12 +41,7 @@ function SignUpPage() {
         email,
         password,
       });
-      if (response.status === 200) {
-       
-       
-      } else {
-        throw new Error(response.data.message || "Signup failed");
-      }
+     
        toast.success("Signup successful!");
        router.push("/messages/postsignup");
     } catch (error: any) {
