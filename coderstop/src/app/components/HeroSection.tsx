@@ -33,21 +33,6 @@ function HeroSection() {
         </motion.h1>
       </HeroHighlight>
       <div className="p-4 relative z-10 w-full text-center">
-        <h1 className="text-4xl md:text-6xl font-bold text-gray-800">
-          Explore Your GitHub and LeetCode Profiles
-        </h1>
-        <p className="mt-4 text-lg md:text-xl text-gray-600">
-          View your GitHub profile, followers, and avatar. Check out your
-          LeetCode avatar and solved problems. Stay connected with our community
-          and read insightful blogs.
-        </p>
-        <div className="mt-6">
-          <Link href={"#"}>
-            
-              Explore Now
-            
-          </Link>
-        </div>
       </div>
     </div>
   );

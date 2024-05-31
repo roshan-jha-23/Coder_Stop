@@ -12,10 +12,11 @@
   "dependencies": {
     "@kinde-oss/kinde-auth-nextjs": "^2.2.10",
     "@react-three/drei": "^9.105.6",
-    "@react-three/fiber": "^8.16.6",
+    "@react-three/fiber": "^8.16.7",
+    "@tabler/icons-react": "^3.5.0",
     "axios": "^1.6.8",
     "clsx": "^2.1.1",
-    "framer-motion": "^11.2.4",
+    "framer-motion": "^11.2.10",
     "jsonwebtoken": "^9.0.2",
     "mini-svg-data-uri": "^1.4.4",
     "mongoose": "^8.4.0",

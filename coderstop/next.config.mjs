@@ -10,6 +10,8 @@ const nextConfig = {
       "userpic.codeforces.org",
       "media.licdn.com",
       "images.unsplash.com",
+      "plus.unsplash.com",
+      "encrypted-tbn0.gstatic.com",
     ],
   },
   async rewrites() {
