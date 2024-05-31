@@ -12,38 +12,75 @@ export async function POST(request: NextRequest) {
     const { username, email, password } = reqBody;
 
     // Validation
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return NextResponse.json({ message: "User already exists", status: 400 });
+    const existingUserByUsernameAndIsVerified = await User.findOne({
+      username: username,
+      isVerified: true,
+    });
+    if (existingUserByUsernameAndIsVerified) {
+      return NextResponse.json(
+        { message: "Username already exists" },
+        { status: 400 }
+      );
+      
     }
 
-    const salt = await bcryptjs.genSalt(10);
-    const hashedPassword = await bcryptjs.hash(password, salt);
-    console.log("mai yaha tak aaya")
-    const newUser = new User({
-      username,
-      email,
-      password: hashedPassword,
-    });
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      // If the user exists and is verified, return an error
+      if (existingUser.isVerified) {
+        return NextResponse.json(
+          { message: "Email already exists and is verified" },
+          { status: 400 }
+        );
+      } else {
+        // If the user exists but is not verified, update password and send verification email
+        const hashedPassword = await bcryptjs.hash(password, 10);
+        existingUser.password = hashedPassword;
+        await existingUser.save();
 
-    const savedUser = await newUser.save();
-    console.log("mai yaha tak aaya 2");
-    // Send verification email
- await sendEmail({
-      email,
-      emailType: "VERIFY",
-      userId: savedUser._id,
-    });
-console.log("mai yaha tak aaya 3");
-    return NextResponse.json(
-      {
-        message: "User registered successfully",
-        success: true,
-        user: savedUser,
-      },
-      { status: 201 }
-    );
-  } catch (error:any) {
+        // Send verification email
+        await sendEmail({
+          email,
+          emailType: "VERIFY",
+          userId: existingUser._id,
+        });
+
+        return NextResponse.json(
+          {
+            message: "User registered successfully. Verification email sent.",
+            success: true,
+          },
+          { status: 200 }
+        );
+      }
+    } else {
+      // If the user does not exist, create a new user
+      const salt = await bcryptjs.genSalt(10);
+      const hashedPassword = await bcryptjs.hash(password, salt);
+      const newUser = new User({
+        username,
+        email,
+        password: hashedPassword,
+      });
+
+      const savedUser = await newUser.save();
+      // Send verification email
+      await sendEmail({
+        email,
+        emailType: "VERIFY",
+        userId: savedUser._id,
+      });
+
+      return NextResponse.json(
+        {
+          message: "User registered successfully",
+          success: true,
+          user: savedUser,
+        },
+        { status: 201 }
+      );
+    }
+  } catch (error: any) {
     console.log(error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

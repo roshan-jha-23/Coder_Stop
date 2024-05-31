@@ -6,6 +6,7 @@ import { cn } from "@/utils/cn";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
+import { FaGoogle } from "react-icons/fa"; // Importing Google icon
 
 function LoginPage() {
   const router = useRouter();
@@ -41,10 +42,12 @@ function LoginPage() {
       });
 
       toast.success("Signin successful!");
-      router.push("/dashboard");
+      router.push("/dashboard"); // Navigate to the dashboard on successful login
     } catch (error: any) {
       console.log("Signin failed", error);
-      toast.error(error.message);
+      toast.error(
+        "Signin failed. Please check your credentials and try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -94,13 +97,23 @@ function LoginPage() {
             type="submit"
             disabled={disableButton}
           >
-            {loading ? "Signing up..." : "Sign Up"}
+            {loading ? "Signing in..." : "Sign In"}
             <BottomGradient />
           </button>
 
           <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-10 h-[1px] w-full" />
 
-          <div className="flex flex-col space-y-4"></div>
+          <div className="flex flex-col space-y-4">
+            <button
+              className="flex items-center justify-center space-x-2 bg-red-600 text-white w-full py-2 rounded-md shadow-md"
+              onClick={() => {
+                router.push("/account");
+              }}
+            >
+              <FaGoogle size={20} />
+              <span>Sign Up with Google</span>
+            </button>
+          </div>
         </form>
       </div>
     </main>

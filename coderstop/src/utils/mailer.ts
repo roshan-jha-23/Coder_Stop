@@ -2,10 +2,8 @@ import nodemailer from "nodemailer";
 import bcryptjs from "bcryptjs";
 import User from "@/models/userModel";
 
-export const sendEmail = async ({ email, emailType, userId }:any) => {
- 
+export const sendEmail = async ({ email, emailType, userId }: any) => {
   try {
-
     if (
       !process.env.SENDER_MAIL ||
       !process.env.SENDER_MAIL_PASS ||
@@ -13,7 +11,7 @@ export const sendEmail = async ({ email, emailType, userId }:any) => {
     ) {
       throw new Error("Missing environment variables");
     }
-    
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -74,7 +72,7 @@ export const sendEmail = async ({ email, emailType, userId }:any) => {
 
     const mailResponse = await transporter.sendMail(mailOptions);
     return mailResponse;
-  } catch (error:any) {
+  } catch (error: any) {
     throw new Error(error.message);
   }
 };

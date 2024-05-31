@@ -1,5 +1,21 @@
 import mongoose, { Schema } from "mongoose";
 
+export interface Message extends mongoose.Document {
+  content: string;
+  createdAt: Date;
+}
+
+const MessageSchema: Schema<Message> = new mongoose.Schema({
+  content: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+});
 export interface User extends mongoose.Document {
   username: string;
   email: string;
@@ -10,6 +26,8 @@ export interface User extends mongoose.Document {
   forgotPasswordTokenExpiry: Date;
   verifyToken: string;
   verifyTokenExpiry: Date;
+  isAcceptingMessages: boolean;
+  messages: Message[];
 }
 
 const userSchema: Schema<User> = new mongoose.Schema(
@@ -49,6 +67,11 @@ const userSchema: Schema<User> = new mongoose.Schema(
     },
     verifyToken: String,
     verifyTokenExpiry: Date,
+    isAcceptingMessages: {
+      type: Boolean,
+      default: true,
+    },
+    messages: [MessageSchema],
   },
   { timestamps: true }
 );
