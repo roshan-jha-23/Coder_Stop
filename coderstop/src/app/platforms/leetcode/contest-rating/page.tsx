@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useState } from "react";
 
 // Define interface for LeetCodeContest
@@ -38,55 +38,39 @@ function Page() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "100vh",
-      }}
-    >
-     
+    <div className="flex flex-col items-center justify-center min-h-screen bg-black p-4">
       <input
         type="text"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-        style={{ padding: "8py", marginRight: "8px" }}
+        className="p-2 mb-4 text-black bg-yellow-300 border border-yellow-500 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
         placeholder="Enter username"
       />
       <button
         onClick={fetchContestDetail}
-        style={{
-          padding: "12py 1px",
-          backgroundColor: "#007bff",
-          color: "#fff",
-          border: "none",
-          cursor: "pointer",
-          marginLeft: "8px",
-        }}
+        className="px-4 py-2 bg-yellow-500 text-black font-bold rounded-md hover:bg-yellow-600 transition duration-300"
       >
         Fetch Contest Details
       </button>
-      
-      {isLoading && <p style={{ marginTop: "20px" }}>Loading...</p>}
-      
-      {error && <p style={{ color: "red", marginTop: "20px" }}>{error}</p>}
-      
+      {isLoading && (
+        <p className="mt-4 text-yellow-500 animate-pulse">Loading...</p>
+      )}
+      {error && <p className="mt-4 text-red-500">{error}</p>}
       {contest && (
-        <div
-          style={{
-            marginTop: "20px",
-            border: "1px solid #ccc",
-            padding: "10px",
-            borderRadius: "5px",
-            backgroundColor: "#f9f9f9",
-          }}
-        >
-          <p>Total Contest: {contest.totalcontest}</p>
-          <p>Rating: {contest.rating}</p>
-          <p>Global Ranking: {contest.globalranking}</p>
-          <p>Top Percent: {contest.toppercent}</p>
+        <div className="mt-6 p-4 border border-yellow-500 rounded-md bg-black text-yellow-300 shadow-md w-full max-w-md">
+          <h2 className="text-2xl font-extrabold mb-4">Contest Details</h2>
+          <p className="mb-2">
+            <strong>Total Contest:</strong> {contest.totalcontest}
+          </p>
+          <p className="mb-2">
+            <strong>Rating:</strong> {contest.rating}
+          </p>
+          <p className="mb-2">
+            <strong>Global Ranking:</strong> {contest.globalranking}
+          </p>
+          <p className="mb-2">
+            <strong>Top Percent:</strong> {contest.toppercent}
+          </p>
         </div>
       )}
     </div>

@@ -14,11 +14,11 @@ function Page() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100 relative overflow-hidden">
-      <div className="relative z-10 text-center p-10 bg-white shadow-lg rounded-lg">
+    <div className="flex items-center bg-dot-thick-black justify-center h-screen bg-gray-900 relative overflow-hidden">
+      <div className="relative z-10 text-center p-10 bg-black shadow-lg rounded-lg">
         <h1 className="text-4xl font-bold mb-4 text-indigo-600">CodeForce</h1>
-        <p className="text-2xl mb-8 text-gray-700">
-          So, what's on your mind, coder?
+        <p className="text-2xl mb-8 text-gray-300">
+          So, whats on your mind, coder?
         </p>
         <button
           onClick={fetchHandle}

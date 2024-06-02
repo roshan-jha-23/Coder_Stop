@@ -39,15 +39,15 @@ function Page() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md text-center">
+    <div className="flex mt-24 items-center justify-center min-h-screen bg-gray-900 text-white">
+      <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md text-center">
         <h1 className="text-3xl font-bold mb-6">Codeforces User Info</h1>
         <input
           type="text"
           value={handle}
           onChange={(e) => setHandle(e.target.value)}
           placeholder="Enter Codeforces handle"
-          className="w-full p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-indigo-500"
+          className="w-full p-2 border border-gray-700 rounded-lg mb-4 focus:outline-none focus:border-indigo-500 bg-gray-900 text-white"
         />
         <button
           onClick={fetchUser}

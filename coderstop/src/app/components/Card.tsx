@@ -11,18 +11,18 @@ interface CardProps {
   avatar: string;
   bio: string;
   url: string;
-  followers:string;
+  followers: string;
 }
 
-export function Card({ username, avatar, bio, followers }: CardProps) {
+export function Card({ username, avatar, bio, followers, url }: CardProps) {
   return (
-    <CardContainer className="inter-var">
+    <CardContainer className="inter-var shadow-lg transition-transform duration-300 hover:scale-105">
       <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border">
         <CardItem
           translateZ="50"
-          className="text-xl font-bold text-neutral-600 dark:text-white"
+          className="text-2xl font-semibold text-orange-500 dark:text-orange-400"
         >
-          Username: {username}
+          {username}
         </CardItem>
         <CardItem
           as="p"
@@ -37,15 +37,23 @@ export function Card({ username, avatar, bio, followers }: CardProps) {
             height={1000}
             width={1000}
             className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
-            alt="thumbnail"
+            alt={`${username}'s avatar`}
           />
         </CardItem>
-        <div className="flex justify-between items-center mt-20">
+        <div className="flex justify-between items-center mt-6">
           <CardItem
             translateZ="50"
-            className="text-xl font-bold text-neutral-600 dark:text-white"
+            className="text-xl font-semibold text-orange-500 dark:text-orange-400"
           >
             Followers: {followers}
+          </CardItem>
+          <CardItem
+            translateZ="50"
+            className="text-xl font-semibold text-orange-500 hover:underline dark:text-orange-400"
+          >
+            <Link href={url} target="_blank">
+              Visit Site
+            </Link>
           </CardItem>
         </div>
       </CardBody>

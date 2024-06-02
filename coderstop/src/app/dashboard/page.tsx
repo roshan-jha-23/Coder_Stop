@@ -1,12 +1,11 @@
-import React from "react";
-import Dashboard from "./puttingTogether/PutTogether";
+import React from 'react'
 
-function App() {
+function page() {
   return (
-    <div className="App">
-      <Dashboard />
+    <div>
+      haha
     </div>
-  );
+  )
 }
 
-export default App;
+export default page

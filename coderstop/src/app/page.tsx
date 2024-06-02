@@ -4,13 +4,17 @@ import { AnimatedTooltipPreview } from "./components/OurTeam";
 import { TracingBeam1 } from "@/app/components/TracingBeam";
 import { Reveal } from "./components/Reveal";
 import { MacbookScrollDemo } from "./components/MacBook";
+import { Heroji } from "./components/Heroji.";
 
 const MainPage = () => {
   return (
-    <main className="min-h-screen bg-gray-100 bg-dot-thick-slate-800">
+    <main className="min-h-screen bg-dot-thick-slate-800 bg-black">
       <div className="mt-24">
         <section>
           <HeroSection />
+        </section>
+        <section>
+          <Heroji/>
         </section>
         <section>
           <MacbookScrollDemo/>
