@@ -56,19 +56,15 @@ const userSchema: Schema<User> = new mongoose.Schema(
     },
     bio: {
       type: String,
-      required: [true, "Please provide a password"],
     },
     skills: {
       type: String,
-      required: [true, "Please provide a password"],
     },
     profilePicUrl: {
       type: String,
-      required: [true, "Please provide a password"],
     },
     favoritecodinglanguage: {
       type: String,
-      required: [true, "Please provide a password"],
     },
 
     isVerified: {
