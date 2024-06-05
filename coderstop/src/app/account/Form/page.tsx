@@ -2,7 +2,7 @@
 import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
+
 
 const ProfileCompletionForm: React.FC = () => {
   const router = useRouter();
@@ -59,14 +59,13 @@ const ProfileCompletionForm: React.FC = () => {
       });
 
       if (response.status === 200) {
-        toast.success("Profile updated successfully!");
         router.push("/dashboard"); // Navigate to the dashboard on successful profile update
       } else {
         setError("Failed to update profile.");
       }
     } catch (error: any) {
       console.error("Profile update failed", error);
-      toast.error("Profile update failed. Please try again.");
+     
     } finally {
       setLoading(false);
     }

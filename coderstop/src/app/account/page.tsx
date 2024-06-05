@@ -5,7 +5,7 @@ import { Input } from "@/app/components/ui/input";
 import { cn } from "@/utils/cn";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
+
 
 function SignUpPage() {
   const router = useRouter();
@@ -42,11 +42,11 @@ function SignUpPage() {
         password,
       });
      
-       toast.success("Signup successful!");
+  
        router.push("/messages/postsignup");
     } catch (error: any) {
       console.log("Signup failed", error);
-      toast.error(error.message);
+    
     } finally {
       setLoading(false);
     }

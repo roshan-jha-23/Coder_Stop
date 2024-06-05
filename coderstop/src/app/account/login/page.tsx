@@ -5,7 +5,6 @@ import { Input } from "@/app/components/ui/input";
 import { cn } from "@/utils/cn";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
 import { FaGoogle } from "react-icons/fa"; // Importing Google icon
 
 function LoginPage() {
@@ -41,13 +40,11 @@ function LoginPage() {
         password,
       });
 
-      toast.success("Signin successful!");
+     
       router.push("/dashboard"); // Navigate to the dashboard on successful login
     } catch (error: any) {
       console.log("Signin failed", error);
-      toast.error(
-        "Signin failed. Please check your credentials and try again."
-      );
+     
     } finally {
       setLoading(false);
     }
