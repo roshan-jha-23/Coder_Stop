@@ -1,26 +1,33 @@
 "use client";
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
-interface ProfileCompletionFormProps {
-  onSubmit: (formData: FormData) => void;
-}
-
-const ProfileCompletionForm: React.FC<ProfileCompletionFormProps> = ({
-  onSubmit,
-}) => {
+const ProfileCompletionForm: React.FC = () => {
+  const router = useRouter();
+  const [email, setEmail] = useState<string>("");
   const [bio, setBio] = useState<string>("");
-  const [profilePicture, setProfilePicture] = useState<File | null>(null);
+  const [profilePictureUrl, setProfilePictureUrl] = useState<string>("");
   const [skills, setSkills] = useState<string>("");
   const [favoriteLanguage, setFavoriteLanguage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+
+  useEffect(() => {
+    setError("");
+  }, [email, bio, profilePictureUrl, skills, favoriteLanguage]);
+
+  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
 
   const handleBioChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setBio(e.target.value);
   };
 
-  const handleProfilePictureChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setProfilePicture(e.target.files[0]);
-    }
+  const handleProfilePictureUrlChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setProfilePictureUrl(e.target.value);
   };
 
   const handleSkillsChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,16 +38,38 @@ const ProfileCompletionForm: React.FC<ProfileCompletionFormProps> = ({
     setFavoriteLanguage(e.target.value);
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("bio", bio);
-    if (profilePicture) {
-      formData.append("profilePicture", profilePicture);
+    setLoading(true);
+    setError("");
+
+    if (!email || !bio || !profilePictureUrl || !skills || !favoriteLanguage) {
+      setError("Please fill in all fields.");
+      setLoading(false);
+      return;
     }
-    formData.append("skills", skills);
-    formData.append("favoriteLanguage", favoriteLanguage);
-    onSubmit(formData);
+
+    try {
+      const response = await axios.post("/api/users/formdata", {
+        email,
+        bio,
+        profilePicUrl: profilePictureUrl,
+        skills,
+        favoriteCodingLanguage: favoriteLanguage,
+      });
+
+      if (response.status === 200) {
+        toast.success("Profile updated successfully!");
+        router.push("/dashboard"); // Navigate to the dashboard on successful profile update
+      } else {
+        setError("Failed to update profile.");
+      }
+    } catch (error: any) {
+      console.error("Profile update failed", error);
+      toast.error("Profile update failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -49,6 +78,34 @@ const ProfileCompletionForm: React.FC<ProfileCompletionFormProps> = ({
         className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md"
         onSubmit={handleSubmit}
       >
+        <header className="text-center mb-4">
+          <h1 className="font-bold text-xl text-neutral-800">
+            Complete Your Profile
+          </h1>
+          <p className="text-neutral-600 text-sm">
+            Fill in the details to complete your profile
+          </p>
+        </header>
+
+        {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
+
+        <div className="mb-4">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Email:
+          </label>
+          <input
+            id="email"
+            type="email"
+            placeholder="eg: user@example.com"
+            value={email}
+            onChange={handleEmailChange}
+            required
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
         <div className="mb-4">
           <label
             htmlFor="bio"
@@ -101,24 +158,27 @@ const ProfileCompletionForm: React.FC<ProfileCompletionFormProps> = ({
         </div>
         <div className="mb-4">
           <label
-            htmlFor="profilePicture"
+            htmlFor="profilePictureUrl"
             className="block text-sm font-medium text-gray-700"
           >
-            Profile Picture:
+            Profile Picture URL:
           </label>
           <input
-            id="profilePicture"
-            type="file"
-            accept="image/*"
-            onChange={handleProfilePictureChange}
-            className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100"
+            id="profilePictureUrl"
+            type="url"
+            placeholder="eg: https://linkedin.com/in/yourprofilepic"
+            value={profilePictureUrl}
+            onChange={handleProfilePictureUrlChange}
+            required
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
         <button
           type="submit"
+          disabled={loading}
           className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         >
-          Complete Profile
+          {loading ? "Updating..." : "Complete Profile"}
         </button>
       </form>
     </div>

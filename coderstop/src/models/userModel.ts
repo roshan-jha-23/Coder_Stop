@@ -29,8 +29,10 @@ export interface User extends mongoose.Document {
   isAcceptingMessages: boolean;
   messages: Message[];
   bio:string;
+  skills:string;
+  favoritecodinglanguage:string;
+  profilePicUrl:string;
 }
-
 const userSchema: Schema<User> = new mongoose.Schema(
   {
     username: {
@@ -56,6 +58,19 @@ const userSchema: Schema<User> = new mongoose.Schema(
       type: String,
       required: [true, "Please provide a password"],
     },
+    skills: {
+      type: String,
+      required: [true, "Please provide a password"],
+    },
+    profilePicUrl: {
+      type: String,
+      required: [true, "Please provide a password"],
+    },
+    favoritecodinglanguage: {
+      type: String,
+      required: [true, "Please provide a password"],
+    },
+
     isVerified: {
       type: Boolean,
       default: false,
