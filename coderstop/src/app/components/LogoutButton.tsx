@@ -3,17 +3,17 @@ import React from "react";
 import { Button } from "./ui/moving-border";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import toast from "react-hot-toast";
+
 
 export function Logout() {
     const router=useRouter();
     const logoutFxn=async()=>{
         try {
             const response=await axios.post('api/users/logout');
-            toast.success("You have been successfully LoggedOut");
+           
             router.push('/account/login')
         } catch (error:any) {
-            toast.error("there was some error logging you out",error.message);
+          console.log(error)
         }
     }
   return (

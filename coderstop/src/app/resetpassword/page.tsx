@@ -4,7 +4,7 @@ import { Label } from "@/app/components/ui/label";
 import { Input } from "@/app/components/ui/input";
 import { cn } from "@/utils/cn";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+
 import { useRouter } from "next/navigation";
 
 function LoginPage() {
@@ -31,11 +31,11 @@ function LoginPage() {
         oldPassword,
         newPassword,
       });
-      toast.success("Signup successful!");
+      
       router.push("/");
     } catch (error: any) {
       console.log("Signup failed", error);
-      toast.error(error.message);
+  
     } finally {
       setLoading(false);
     }
