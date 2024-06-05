@@ -3,16 +3,19 @@ import React, { useState } from "react";
 import { Label } from "@/app/components/ui/label";
 import { Input } from "@/app/components/ui/input";
 import { cn } from "@/utils/cn";
-
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 function LoginPage() {
+  const router=useRouter();
  
   const [newPassword, setNewPassword] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -23,9 +26,19 @@ function LoginPage() {
       setLoading(false);
       return;
     }
-
-    // console.log("Form submitted with details:", { newPassword, oldPassword });
-    setLoading(false);
+    try {
+      const response = await axios.post("api/user/resetpassword", {
+        oldPassword,
+        newPassword,
+      });
+      toast.success("Signup successful!");
+      router.push("/");
+    } catch (error: any) {
+      console.log("Signup failed", error);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
   const gotoprofile = () => {
     window.location.href = "/dashboard";

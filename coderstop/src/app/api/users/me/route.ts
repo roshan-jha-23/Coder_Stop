@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     console.log("yaha aaya?");
     const userid = await getDataFromToken(request);
     const user = await User.findOne({ _id: userid }).select("-password").lean(); // Convert to plain JS object
-    console.log("yaha aaya2?");
+   
 
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });

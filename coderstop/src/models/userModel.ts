@@ -28,6 +28,7 @@ export interface User extends mongoose.Document {
   verifyTokenExpiry: Date;
   isAcceptingMessages: boolean;
   messages: Message[];
+  bio:string;
 }
 
 const userSchema: Schema<User> = new mongoose.Schema(
@@ -48,6 +49,10 @@ const userSchema: Schema<User> = new mongoose.Schema(
       index: true,
     },
     password: {
+      type: String,
+      required: [true, "Please provide a password"],
+    },
+    bio: {
       type: String,
       required: [true, "Please provide a password"],
     },
