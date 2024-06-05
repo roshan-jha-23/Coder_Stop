@@ -10,7 +10,6 @@ interface CardProps {
   username: string;
   avatar: string;
   bio: string;
-  url: string;
   ranking: number;
 }
 
