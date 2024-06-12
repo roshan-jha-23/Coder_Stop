@@ -8,9 +8,9 @@ function Page() {
           Signup Successful!
         </h1>
         <p className="text-center text-gray-600 dark:text-gray-300 mt-4">
-          Ji, tusi signup kar chuke ho. Asin tuhade email vich ek confirmation
-          mail paaya hai. Kripya, apne email vich jaake account confirm karo.
-          Shukriya!
+          You have successfully signed up. We have sent a confirmation email to
+          your inbox. Please check your email to confirm your account. Thank
+          you!
         </p>
         <div className="flex justify-center mt-8">
           <a
