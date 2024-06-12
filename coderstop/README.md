@@ -12,7 +12,7 @@ First, clone the repository and navigate to the project directory:
 
 bash
 Copy code
-git clone https://github.com/yourusername/coderstop.git
+git clone https://github.com/roshan-jha-23/coderstop.git
 cd coderstop
 Next, install the dependencies:
 
