@@ -50,7 +50,7 @@ function Dashboard() {
   }
 
   return (
-    <div className="relative h-screen p-8 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 text-white">
+    <div className="relative h-screen p-8 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 text-white relative-position">
       <div className="absolute top-0 right-0 m-4">
         <Logout />
       </div>

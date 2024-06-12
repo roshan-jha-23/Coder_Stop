@@ -59,7 +59,7 @@ const ProfileCompletionForm: React.FC = () => {
       });
 
       if (response.status === 200) {
-        router.push("/dashboard"); // Navigate to the dashboard on successful profile update
+        router.push("/account/login"); // Navigate to the dashboard on successful profile update
       } else {
         setError("Failed to update profile.");
       }
