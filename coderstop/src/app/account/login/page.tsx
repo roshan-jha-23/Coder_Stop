@@ -5,7 +5,8 @@ import { Input } from "@/app/components/ui/input";
 import { cn } from "@/utils/cn";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { FaGoogle } from "react-icons/fa"; // Importing Google icon
+import { FaGoogle,FaMailchimp } from "react-icons/fa"; 
+import { IoIosMail } from "react-icons/io";// Importing Google icon
 
 function LoginPage() {
   const router = useRouter();
@@ -102,13 +103,13 @@ function LoginPage() {
 
           <div className="flex flex-col space-y-4">
             <button
-              className="flex items-center justify-center space-x-2 bg-red-600 text-white w-full py-2 rounded-md shadow-md"
+              className="flex items-center justify-center space-x-2 bg-red-600 hover:bg-black text-white w-full py-2 rounded-md shadow-md"
               onClick={() => {
                 router.push("/account");
               }}
             >
-              <FaGoogle size={20} />
-              <span>Sign Up with Google</span>
+              <IoIosMail size={25} />
+              <span>Sign Up with Gmail & Password</span>
             </button>
           </div>
         </form>

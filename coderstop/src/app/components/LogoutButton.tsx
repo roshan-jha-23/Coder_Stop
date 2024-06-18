@@ -20,7 +20,7 @@ export function Logout() {
     <div>
       <Button
         borderRadius="1.75rem"
-        className="bg-red-500 dark:bg-red-700 text-white border-red-600 dark:border-red-900 py-1 px-3 text-sm"
+        className="bg-red-500 dark:bg-red-700 text-white border-red-600 dark:border-red-900 py-1 px-2 text-sm"
         onClick={logoutFxn}
       >
         Logout

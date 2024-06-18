@@ -5,19 +5,20 @@ import { TracingBeam1 } from "@/app/components/TracingBeam";
 import { Reveal } from "./components/Reveal";
 import { MacbookScrollDemo } from "./components/MacBook";
 import { Heroji } from "./components/Heroji.";
-
+import Navbar from "@/app/components/Navbar";
 const MainPage = () => {
   return (
     <main className="min-h-screen bg-dot-thick-slate-800 bg-black">
       <div className="mt-24">
+        <Navbar />
         <section>
           <HeroSection />
         </section>
         <section>
-          <Heroji/>
+          <Heroji />
         </section>
         <section>
-          <MacbookScrollDemo/>
+          <MacbookScrollDemo />
         </section>
         <section>
           <TracingBeam1 />

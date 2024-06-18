@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/app/components/Navbar";
+
 import { ThemeProvider } from "./components/theme-provider";
 
 const inter = Inter({ subsets: ["greek"] });
@@ -22,7 +22,7 @@ export default function RootLayout({
         <div className="relative">
           
         </div>
-        <Navbar />
+        
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
