@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { Logout } from "../components/LogoutButton";
 
 interface UserData {
@@ -41,6 +42,15 @@ function Dashboard() {
     window.location.href = "/";
   };
 
+  const handleConnectWithFriends = () => {
+    const chatAppUrl = process.env.NEXT_PUBLIC_REAL_TIME_CHAT;
+    if (chatAppUrl) {
+      window.location.href = chatAppUrl;
+    } else {
+      console.error("Chat application URL is not defined");
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -62,17 +72,27 @@ function Dashboard() {
         >
           Home
         </button>
+        <button
+          onClick={handleConnectWithFriends}
+          className="bg-white text-black py-2 px-6 rounded-lg shadow-lg transform hover:scale-110 transition-transform"
+        >
+          Connect with Friends
+        </button>
         <div className="text-xs">
           <Logout />
         </div>
       </header>
       <main className="max-w-4xl mx-auto mt-24 bg-white bg-opacity-80 p-6 rounded-lg shadow-md">
         <section className="flex items-center space-x-4">
-          <img
-            src={userData.profilePicUrl}
-            alt="Profile"
-            className="w-20 h-20 rounded-full border-4 border-blue-500"
-          />
+          <div className="w-20 h-20 relative">
+            <Image
+              src={userData.profilePicUrl}
+              alt="Profile"
+              className="rounded-full border-4 border-blue-500"
+              layout="fill"
+              objectFit="cover"
+            />
+          </div>
           <div>
             <h1 className="text-2xl font-bold text-black">{userData.name}</h1>
             <p className="text-gray-600">@{userData.username}</p>
