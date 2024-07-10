@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Recursive } from "next/font/google";
 import "./globals.css";
 
 import { ThemeProvider } from "./components/theme-provider";
 
-const inter = Inter({ subsets: ["greek"] });
+const inter = Recursive({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "WHISPER-WIRE",
+  title: "Coder_Stop",
   description: "A one stoop solution for all the coder",
 };
 

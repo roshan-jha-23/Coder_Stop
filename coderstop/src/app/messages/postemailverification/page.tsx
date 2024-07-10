@@ -1,3 +1,4 @@
+import { cn } from "@/utils/cn";
 import Link from "next/link";
 import React from "react";
 
@@ -10,9 +11,9 @@ function Page() {
           Congratulations! You have been verified in our database. Now you can
           Fill in the form .
         </p>
-        <Link href="/account/Form">
+        <Link href="/account/login" className={cn('hover:bg-white')}>
           <div className="inline-block px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
-            Take me to Form Page.
+            SIGN IN TO EXPLORE MORE
           </div>
         </Link>
       </div>

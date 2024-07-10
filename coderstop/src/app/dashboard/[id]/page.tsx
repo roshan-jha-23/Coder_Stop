@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { Logout } from "../components/LogoutButton";
-
+import { Logout } from "../../components/LogoutButton";
+import { notFound, useSearchParams } from "next/navigation";
+import { db } from "@/db";
 interface UserData {
   name: string;
   email: string;
@@ -12,11 +13,26 @@ interface UserData {
   bio: string;
   profilePicUrl: string;
 }
+interface PageProps {
+  searchParams: {
+    [key: string]: string | string[] | undefined;
+  };
+}
 
-function Dashboard() {
+const Page = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [imageConfig, setImageConfig] = useState<{
+    imageUrl: string;
+    width: number;
+    height: number;
+  } | null>(null);
+
+  const searchParams=useSearchParams();
+  const id = searchParams.get("configuration");
+
+ 
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -34,9 +50,27 @@ function Dashboard() {
         setLoading(false);
       }
     };
+   if (!id || typeof id !== "string") {
+     return notFound();
+   }
+    const fetchImageConfig = async () => {
+      try {
+        const configuration = await db.configuration.findUnique({
+          where: { id: id },
+        });
+        setImageConfig({
+          imageUrl: configuration?.imageUrl!,
+          width: configuration?.width!,
+          height: configuration?.height!,
+        });
+      } catch (error) {
+        setError("Failed to fetch image configuration");
+      }
+    };
 
     fetchUserData();
-  }, []);
+    fetchImageConfig();
+  }, [id]);
 
   const takeMeToHome = () => {
     window.location.href = "/";
@@ -59,7 +93,7 @@ function Dashboard() {
     return <div>Error: {error}</div>;
   }
 
-  if (!userData) {
+  if (!userData || !imageConfig) {
     return <div>No user data available</div>;
   }
 
@@ -86,7 +120,7 @@ function Dashboard() {
         <section className="flex items-center space-x-4">
           <div className="w-20 h-20 relative">
             <Image
-              src={userData.profilePicUrl}
+              src={imageConfig.imageUrl}
               alt="Profile"
               className="rounded-full border-4 border-blue-500"
               layout="fill"
@@ -121,6 +155,6 @@ function Dashboard() {
       </main>
     </div>
   );
-}
+};
 
-export default Dashboard;
+export default Page;

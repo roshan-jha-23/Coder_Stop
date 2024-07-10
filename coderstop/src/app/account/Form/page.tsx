@@ -1,42 +1,61 @@
 "use client";
-import { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import {
+  useState,
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useTransition,
+} from "react";
 import axios from "axios";
+import { useUploadThing } from "@/lib/uploadthing";
 import { useRouter } from "next/navigation";
+import Dropzone, { FileRejection } from "react-dropzone";
+import { Image, Loader2, MousePointerSquareDashed } from "lucide-react";
+import { toast } from "@/components/ui/use-toast";
+import { Progress } from "@/components/ui/progress";
 
-
-const ProfileCompletionForm: React.FC = () => {
+const ProfileCompletionForm = () => {
+  const [isDragOver, setIsDragOver] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isPending, startTransition] = useTransition();
+  const [email, setEmail] = useState("");
+  const [bio, setBio] = useState("");
+  const [profilePictureUrl, setProfilePictureUrl] = useState("");
+  const [skills, setSkills] = useState("");
+  const [favoriteLanguage, setFavoriteLanguage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const router = useRouter();
-  const [email, setEmail] = useState<string>("");
-  const [bio, setBio] = useState<string>("");
-  const [profilePictureUrl, setProfilePictureUrl] = useState<string>("");
-  const [skills, setSkills] = useState<string>("");
-  const [favoriteLanguage, setFavoriteLanguage] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  const { startUpload, isUploading } = useUploadThing("imageUploader", {
+    onClientUploadComplete: ([data]) => {
+      const configId = data.serverData.configId;
+      startTransition(() => {
+        router.push(`/dashboard/?configuration=${configId}`);
+      });
+    },
+    onUploadProgress: (p) => {
+      setUploadProgress(p);
+    },
+  });
+
+  const onDropRejected = (rejectedFiles: FileRejection[]) => {
+    const [file] = rejectedFiles;
+    setIsDragOver(false);
+    toast({
+      title: `${file.file.type} type is not supported.`,
+      description: "Please choose a PNG, JPG, or JPEG image instead.",
+      variant: "destructive",
+    });
+  };
+
+  const onDropAccepted = (acceptedFiles: File[]) => {
+    startUpload(acceptedFiles, { configId: undefined });
+    setIsDragOver(false);
+  };
 
   useEffect(() => {
     setError("");
   }, [email, bio, profilePictureUrl, skills, favoriteLanguage]);
-
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handleBioChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setBio(e.target.value);
-  };
-
-  const handleProfilePictureUrlChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setProfilePictureUrl(e.target.value);
-  };
-
-  const handleSkillsChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSkills(e.target.value);
-  };
-
-  const handleFavoriteLanguageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFavoriteLanguage(e.target.value);
-  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -59,13 +78,13 @@ const ProfileCompletionForm: React.FC = () => {
       });
 
       if (response.status === 200) {
-        router.push("/account/login"); // Navigate to the dashboard on successful profile update
+        router.push("/account/login");
       } else {
         setError("Failed to update profile.");
       }
     } catch (error: any) {
       console.error("Profile update failed", error);
-     
+      setError("An error occurred. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -100,7 +119,7 @@ const ProfileCompletionForm: React.FC = () => {
             type="email"
             placeholder="eg: user@example.com"
             value={email}
-            onChange={handleEmailChange}
+            onChange={(e) => setEmail(e.target.value)}
             required
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
@@ -116,7 +135,7 @@ const ProfileCompletionForm: React.FC = () => {
             id="bio"
             placeholder="eg: I am Hungry coder"
             value={bio}
-            onChange={handleBioChange}
+            onChange={(e) => setBio(e.target.value)}
             required
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
@@ -133,7 +152,7 @@ const ProfileCompletionForm: React.FC = () => {
             type="text"
             placeholder="eg: JavaScript, React, Node.js"
             value={skills}
-            onChange={handleSkillsChange}
+            onChange={(e) => setSkills(e.target.value)}
             required
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
@@ -150,7 +169,7 @@ const ProfileCompletionForm: React.FC = () => {
             type="text"
             placeholder="eg: Python, JavaScript"
             value={favoriteLanguage}
-            onChange={handleFavoriteLanguageChange}
+            onChange={(e) => setFavoriteLanguage(e.target.value)}
             required
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
@@ -160,17 +179,66 @@ const ProfileCompletionForm: React.FC = () => {
             htmlFor="profilePictureUrl"
             className="block text-sm font-medium text-gray-700"
           >
-            Profile Picture URL:
+            Profile Picture:
           </label>
-          <input
-            id="profilePictureUrl"
-            type="url"
-            placeholder="eg: https://linkedin.com/in/yourprofilepic"
-            value={profilePictureUrl}
-            onChange={handleProfilePictureUrlChange}
-            required
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
+          <div className="relative flex flex-1 flex-col items-center justify-center w-full">
+            <Dropzone
+              onDropRejected={onDropRejected}
+              onDropAccepted={onDropAccepted}
+              accept={{
+                "image/png": [".png"],
+                "image/jpeg": [".jpeg"],
+                "image/jpg": [".jpg"],
+              }}
+              onDragEnter={() => setIsDragOver(true)}
+              onDragLeave={() => setIsDragOver(false)}
+            >
+              {({ getRootProps, getInputProps }) => (
+                <div
+                  className="h-full w-full flex-1 flex flex-col items-center justify-center"
+                  {...getRootProps()}
+                >
+                  <input {...getInputProps()} />
+                  {isDragOver ? (
+                    <MousePointerSquareDashed className="h-6 w-6 text-zinc-500 mb-2" />
+                  ) : isUploading || isPending ? (
+                    <Loader2 className="animate-spin h-6 w-6 text-zinc-500 mb-2" />
+                  ) : (
+                    <Image className="h-6 w-6 text-zinc-500 mb-2" />
+                  )}
+                  <div className="flex flex-col justify-center mb-2 text-sm text-zinc-700">
+                    {isUploading ? (
+                      <div className="flex flex-col items-center">
+                        <p>Uploading...</p>
+                        <Progress
+                          value={uploadProgress}
+                          className="mt-2 w-40 h-2 bg-gray-300"
+                        />
+                      </div>
+                    ) : isPending ? (
+                      <div className="flex flex-col items-center">
+                        <p>Redirecting, please wait...</p>
+                      </div>
+                    ) : isDragOver ? (
+                      <p>
+                        <span className="font-semibold">Drop file</span> to
+                        upload
+                      </p>
+                    ) : (
+                      <p>
+                        <span className="font-semibold">Click to upload</span>{" "}
+                        or drag and drop
+                      </p>
+                    )}
+                  </div>
+
+                  {isPending ? null : (
+                    <p className="text-xs text-zinc-500">PNG, JPG, JPEG</p>
+                  )}
+                </div>
+              )}
+            </Dropzone>
+          </div>
         </div>
         <button
           type="submit"

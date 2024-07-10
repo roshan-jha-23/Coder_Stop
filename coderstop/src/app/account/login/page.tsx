@@ -42,7 +42,7 @@ function LoginPage() {
       });
 
      
-      router.push("/dashboard"); // Navigate to the dashboard on successful login
+      router.push("/account/Form"); // Navigate to the dashboard on successful login
     } catch (error: any) {
       console.log("Signin failed", error);
      

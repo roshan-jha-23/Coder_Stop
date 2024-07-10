@@ -31,7 +31,6 @@ export interface User extends mongoose.Document {
   bio:string;
   skills:string;
   favoritecodinglanguage:string;
-  profilePicUrl:string;
 }
 const userSchema: Schema<User> = new mongoose.Schema(
   {
@@ -60,9 +59,7 @@ const userSchema: Schema<User> = new mongoose.Schema(
     skills: {
       type: String,
     },
-    profilePicUrl: {
-      type: String,
-    },
+    
     favoritecodinglanguage: {
       type: String,
     },
