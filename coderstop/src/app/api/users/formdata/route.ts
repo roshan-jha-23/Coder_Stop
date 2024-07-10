@@ -26,7 +26,6 @@ export async function POST(request: NextRequest) {
 
     // Update user profile fields
     user.bio = bio || user.bio;
-    user.profilePicUrl = profilePicUrl || user.profilePicUrl;
     user.favoritecodinglanguage =
       favoritecodinglanguage || user.favoritecodinglanguage;
     user.skills = skills || user.skills;
